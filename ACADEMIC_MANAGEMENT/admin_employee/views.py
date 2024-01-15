@@ -41,3 +41,7 @@ def employee_add(request):
   return HttpResponse(template.render())
 
 
+def employee_add(request):
+  template = loader.get_template('employee_add.html')
+  d=Employee_registration.objects.all()
+  return HttpResponse(template.render({"employee":d}))
