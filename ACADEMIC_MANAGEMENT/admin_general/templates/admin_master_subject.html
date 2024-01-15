@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block content %}
+<ul class="breadcrumb">
+    <li><a href="#">Master</a></li>                    
+    <li class="active">Manage subject</li>
+</ul>
+<!-- END BREADCRUMB -->  
+<div class="content-frame-top">                        
+    <div class="page-title">                    
+        <h2><span class="fa fa-arrow-circle-o-left"></span> Subject Management</h2>
+    </div>                                      
+</div>
+
+
+<form method="post" action="{% url 'admin_master_subject' %}">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading ui-draggable-handle">
+                <h1 class="panel-title"><strong></strong><b>Subject Name</b></h1>
+                <ul class="panel-controls">
+                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="block">                            
+                    <div class="col-md-12">
+                        <div>
+                            <input type="text" placeholder="Subject Name"  name="subject_name" class="form-control" autofocus required>
+                        </div>
+                    </div>                                
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle">
+                    <h1 class="panel-title"><strong></strong><b>Class</b></h1>
+                    <ul class="panel-controls">
+                        <li><label class="check"><input type="checkbox" id="toggleCheckbox" onchange="toggleCheckboxes()"></label></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel-body">
+                {% for sub in list %}  
+                    <label class="check"><input type="checkbox" value="{{sub.id}}" name="check_id" class="toggleTextbox">  {{sub.Master_class_Name}}</label><br>
+                {% endfor %}  
+            </div>
+
+            <div class="panel-footer">
+                <input type="reset" class="btn btn-default" value="Clear">                                 
+                <button id="submitButton" class="btn btn-primary pull-right" disabled>Submit</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading ui-draggable-handle">                                
+            <h1 class="panel-title"><b>View Subjects</b></h1>
+            <ul class="panel-controls">
+                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+            </ul>                                
+        </div>
+    <div class="panel-body">
+        {% comment %} <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control " placeholder="" aria-controls="DataTables_Table_0"></label></div> {% endcomment %}
+        <table class="table datatable dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+                <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column ascending" style="width: 198px;">#</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 309px;">Subject Name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 70px;">Status</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 137px;">Action</th></tr>
+            </thead>
+            <tbody>
+            {% for subject in subjects %} 
+            <tr role="row" class="odd">
+                <td class="sorting_1">{{forloop.counter}}</td>
+                <td>{{subject.Subject_Name}}</td>
+                <td>{% if subject.Status %}<span class="label label-success">Active</span>{% else %}<span class="label label-danger">Deactive</span>{% endif %}</td>
+                        <td>
+                            <button class="btn btn-primary btn-rounded"  onclick="edit_sub({{subject.id}});"><span id="spinner{{subject.id}}" class="fa fa-pencil"></span></button>
+                            {% if subject.Status == 0 %}    
+                                <button class="btn btn-primary btn-rounded" onClick="sub_delete_row({{subject.id}});"><span class="fa fa-trash-o"></span></button>
+                                <input type="hidden" class="btn btn-default" id="delete_url_id" value="{{request.scheme}}://{{request.get_host}}/subject_delete">
+                            {% endif %}
+                        </td>
+                    </tr>
+            {% endfor %}
+                    
+                
+                </tbody>
+        </table>
+        {% comment %} <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 2 of 2 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">Previous</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next" aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0" id="DataTables_Table_0_next">Next</a></div></div> {% endcomment %}
+    </div>
+</div>
+</div>
+<div class="modal" id="modal_basic" tabindex="-1" role="dialog" aria-labelledby="defModalHead" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"></span>×<span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="defModalHead">Edit Subject</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <div class="col-md-6">
+                    <input type="text" placeholder="Subject Name" id="sub_name_id" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <select class="form-control" id="sub_status_id" data-live-search="true">
+                        <option value="1">Active</option>
+                        <option value="0">Deactive</option>
+                    </select>
+                </div><br></br>
+                <div class="panel-body">
+                    {% for sub in list %}  
+                        <label class="check"><input type="checkbox" id="sub_class_id" value="{{sub.id}}" name="check_id" class="toggleTextbox">  {{sub.Master_class_Name}}</label><br>
+                    {% endfor %}  
+                </div>
+    
+                
+
+            </div>
+        </div>
+            
+
+        <div class="panel-footer">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <input type="hidden" class="btn btn-default" id="url_id" value="{{request.scheme}}://{{request.get_host}}/subject_edit">
+            <button class="btn btn-primary pull-right" onclick="update_sub()" id="disabled_btn">Update</button>
+            <input type="hidden" id="edit_data">
+            <input type="hidden" class="btn btn-default" id="update_url_id" value="{{request.scheme}}://{{request.get_host}}/subject_update">
+        </div>
+        
+                
+            
+        </div>
+    </div>
+</div>
+</div>
+<!-- MESSAGE BOX-->
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-remove-row">
+<div class="mb-container">
+    <div class="mb-middle">
+        <div class="mb-title"><span class="fa fa-times"></span> Remove <strong>Data</strong> ?</div>
+        <div class="mb-content">
+            <p>Are you sure you want to remove this row?</p>                    
+            <p>Press Yes if you sure.</p>
+        </div>
+        <div class="mb-footer">
+            <div class="pull-right">
+                <button class="btn btn-success btn-lg mb-control-yes">Yes</button>
+                <button class="btn btn-default btn-lg mb-control-close">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    function toggleCheckboxes() {
+        var checkbox = document.getElementById('toggleCheckbox');
+        var textboxes = document.getElementsByClassName('toggleTextbox');
+        var submitButton = document.getElementById('submitButton');
+
+        for (var i = 0; i < textboxes.length; i++) {
+            textboxes[i].checked = checkbox.checked;
+        }
+
+        // Enable/disable submit button based on whether any checkbox is checked
+        submitButton.disabled = !Array.from(textboxes).some(box => box.checked);
+    }
+
+    // Add this function to handle individual checkbox changes
+    function handleCheckboxChange() {
+        var textboxes = document.getElementsByClassName('toggleTextbox');
+        var submitButton = document.getElementById('submitButton');
+
+        // Enable/disable submit button based on whether any checkbox is checked
+        submitButton.disabled = !Array.from(textboxes).some(box => box.checked);
+    }
+
+    // Attach handleCheckboxChange function to each checkbox
+    var checkboxes = document.getElementsByClassName('toggleTextbox');
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('change', handleCheckboxChange);
+    }
+</script>
+{% endblock content %}
+
+{% comment %} 
+                    /// {% endcomment %}

@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+{% block content %}
+<ul class="breadcrumb">
+    <li><a href="#">Master</a></li>                    
+    <li class="active">Employee Registration</li>
+</ul>
+<!-- END BREADCRUMB -->  
+<div class="content-frame-top">                        
+    <div class="page-title">                    
+        <h2><span class="fa fa-arrow-circle-o-left"></span>Employee Registration</h2>
+    </div>                                      
+</div>
+
+
+<form method="post">
+  
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading ui-draggable-handle">
+                <h1 class="panel-title"><strong></strong><b>Employee Details</b></h1>
+                <ul class="panel-controls">
+                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="block">                            
+                    <div class="col-md-12">
+
+                      <div class="form-group">
+                        <label for="Employee">Employee Category</label>
+                        <select id="Employee" class="form-control" name="Status" onchange="showDropdowns()"> 
+                          <option></option>
+                          {% for i in employee_data %}
+                          <option value={{i.Employee_Area}}>{{i.Employee_Name}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+
+
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" name="name" class="form-control" id="selectOption" placeholder="Enter your name">
+                      </div>
+                      <div class="form-group">
+                        <label>Address</label>
+                        <textarea name="address" class="form-control" rows="3" placeholder="Enter your Address"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label for="Date">Date Of Birth</label>
+                        <input type="Date" Name="dob" class="form-control" id="Date" placeholder="" required>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="exampleSelectRounded0">Mobile </label>
+                        <input type="tel" name="phone" class="form-control" id="exampleSelectRounded0" placeholder="Enter Your number">
+                      </div>
+
+                     
+
+
+                      <div class="form-group">
+                        <label for="Qualification">Qualification</label>
+                        <select id="Qualification" class="form-control" name="Status">
+                          <option></option>
+                          {% for i in qualification_data %}
+                          <option value={{i.id}}>{{i.Qualification_Name}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+    
+                      <div class="form-group">
+                        <label for="Designation">Designation</label>
+                        <select id="Designation" class="form-control" name="Status">
+                          <option></option>
+                          {% for i in designation_data %}
+                          <option value={{i.id}}>{{i.Designation_Name}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="Department">Department</label>
+                        <select id="Department" class="form-control" name="Status">
+                          <option></option>
+                          {% for i in department_data %}
+                          <option value={{i.id}}>{{i.Department_Name}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+    
+                      
+                      <div class="form-group">
+                        <label for="Class">Class</label>
+                        <select id="Class" class="form-control" name="Status">
+                          <option></option>
+                          {% for i in class_data %}
+                          <option value={{i.id}}>{{i.Master_class_Name}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    
+                      
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Employee id</label>
+                        <input type="text" name="emp_id" class="form-control" id="selectOption" placeholder="Enter your qualification">
+                      </div>
+  
+                      
+                      
+                      <div class="form-group">
+                        <label for="Date">Date Of Joining</label>
+                        <input type="Date" Name="Date_Of_Joining" class="form-control" id="Date" placeholder="" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Salary Amount</label>
+                        <input type="text" name="salary" class="form-control" id="selectOption" placeholder="Enter your qualification">
+                      </div>
+                      <div class="form-group">
+                        <label for="Date">Salary Date</label>
+                        <input type="Date" Name="Salary Date" class="form-control" id="Date" placeholder="" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputFile">Photo</label>
+                        <input type="file" name="file" id="exampleInputFile">
+                      </div>
+
+                      
+  
+
+
+
+
+
+
+    
+                    </div>                                
+                </div>
+            </div>
+
+            
+
+            <div class="panel-footer">
+                <input type="reset" class="btn btn-default" value="Clear">                                 
+                <button id="submitButton" class="btn btn-primary pull-right">Submit</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="col-md-6" id="additionalDropdowns" style="display: none">
+    <div class="panel panel-default">
+        <div class="panel-heading ui-draggable-handle">                                
+            <h1 class="panel-title"><b>Teachers Details</b></h1>
+            <ul class="panel-controls">
+                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+            </ul>                                
+        </div>
+
+    <div class="panel-body">
+      {% comment %} ghhjh {% endcomment %}
+      <div class="form-group">
+                        
+        <div class="col-md-4">                                                                                
+          <select id="Class_id" class="form-control" name="Class">
+            <option value="" selected disabled>Select Class</option>
+            {% for i in class_data %}
+              <option value="{{i.id}}">{{i.Master_class_Name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">                                                                                
+          <select id="Division" class="form-control" name="Division">
+            <option value="" selected disabled>Select Division</option>
+            {% for i in division_data %}
+              <option value="{{i.id}}">{{i.Division_Name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">                                                                                
+          <select id="Subject" class="form-control" name="Subject">
+            <option value="" selected disabled>Select Subject</option>
+            {% for i in subject_data %}
+              <option value="{{i.id}}">{{i.Subject_Name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        
+    
+
+</div>
+
+</div>
+
+<div class="col-md-12">
+  <button id="submitButton" class="btn btn-primary btn-block"  onclick="addToTeacherTable()">ADD</button>
+</div>
+
+<div class="panel-body">
+  {% comment %} /// {% endcomment %}
+  <table class="table table-bordered" id="teacherTable" role="grid" aria-describedby="teacherTable_info">
+    <thead>
+      <tr>
+          <th>id</th>
+          <th>Class</th>
+          <th>Division</th>
+          <th>Subject</th>
+          <th>Action</th>
+      </tr>
+  </thead>
+      
+
+      <tbody>
+          <!-- Existing table rows will be populated dynamically using AJAX -->
+      </tbody>
+  </table>
+</div>
+</div>
+
+<script>
+  var rowCount = 0; // Initialize a counter for row numbers
+  var addedRows = {}; // Keep track of added rows to prevent duplicates
+  
+  function addToTeacherTable() {
+  
+      var classId = document.getElementById("Class_id").value;
+      var divisionId = document.getElementById("Division").value;
+      var subjectId = document.getElementById("Subject").value;
+  
+      if (classId == "") {
+          alert("Please select a class");
+          return false;
+      }
+      
+  
+      // Create a unique key for the added row
+      var rowKey = classId + '_' + divisionId + '_' + subjectId;
+  
+      // Check if the row with the same key is already added
+      if (addedRows[rowKey]) {
+          alert("This combination of Class, Division, and Subject is already added.");
+          return false;
+      }
+  
+      rowCount++; // Increment the row counter
+      addedRows[rowKey] = true; // Mark the row as added
+  
+      var newRow = '<tr>';
+      newRow += '<td>' + rowCount + '</td>'; // Display the row number
+      newRow += '<td>' + $('#Class_id option:selected').text() + '</td>';
+      newRow += '<td>' + $('#Division option:selected').text() + '</td>';
+      newRow += '<td>' + $('#Subject option:selected').text() + '</td>';
+      newRow += '<td><button class="btn btn-danger btn-rounded" onclick="deleteRow(this)">Delete</button></td>';
+      newRow += '</tr>';
+  
+      $('#teacherTable tbody').append(newRow);
+  
+      // Clear the form after successful submission
+      $('#Class_id, #Division, #Subject').val('');
+  }
+  
+  function deleteRow(button) {
+      // Remove the row and update the addedRows object
+      var rowToDelete = $(button).closest('tr');
+      var rowKeyToDelete = rowToDelete.find('td:eq(1)').text() + '_' + rowToDelete.find('td:eq(2)').text() + '_' + rowToDelete.find('td:eq(3)').text();
+      delete addedRows[rowKeyToDelete];
+      rowToDelete.remove();
+  }
+</script>
+
+
+
+</div>
+<div class="modal" id="modal_basic" tabindex="-1" role="dialog" aria-labelledby="defModalHead" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"></span>×<span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="defModalHead">Edit Subject</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <div class="col-md-6">
+                    <input type="text" placeholder="Subject Name" id="sub_name_id" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <select class="form-control" id="sub_status_id" data-live-search="true">
+                        <option value="1">Active</option>
+                        <option value="0">Deactive</option>
+                    </select>
+                </div><br></br>
+                <div class="panel-body">
+                    {% for sub in list %}  
+                        <label class="check"><input type="checkbox" id="sub_class_id" value="{{sub.id}}" name="check_id" class="toggleTextbox">  {{sub.Master_class_Name}}</label><br>
+                    {% endfor %}  
+                </div>
+    
+                
+
+            </div>
+        </div>
+            
+
+        <div class="panel-footer">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <input type="hidden" class="btn btn-default" id="url_id" value="{{request.scheme}}://{{request.get_host}}/subject_edit">
+            <button class="btn btn-primary pull-right" onclick="update_sub()" id="disabled_btn">Update</button>
+            <input type="hidden" id="edit_data">
+            <input type="hidden" class="btn btn-default" id="update_url_id" value="{{request.scheme}}://{{request.get_host}}/subject_update">
+        </div>
+        
+                
+            
+        </div>
+    </div>
+</div>
+</div>
+<!-- MESSAGE BOX-->
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-remove-row">
+<div class="mb-container">
+    <div class="mb-middle">
+        <div class="mb-title"><span class="fa fa-times"></span> Remove <strong>Data</strong> ?</div>
+        <div class="mb-content">
+            <p>Are you sure you want to remove this row?</p>                    
+            <p>Press Yes if you sure.</p>
+        </div>
+        <div class="mb-footer">
+            <div class="pull-right">
+                <button class="btn btn-success btn-lg mb-control-yes">Yes</button>
+                <button class="btn btn-default btn-lg mb-control-close">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+{% endblock content %}
+
+{% comment %} 
+                    /// {% endcomment %}
