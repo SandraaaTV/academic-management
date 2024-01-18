@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -131,3 +131,7 @@ EMPLOYEE_CATEGORY_AREA_CAFETERIA=2
 EMPLOYEE_CATEGORY_AREA_LIBRARIAN=3
 EMPLOYEE_CATEGORY_AREA_TEACHER=4
 EMPLOYEE_CATEGORY_AREA_OTHER=5
+
+
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"

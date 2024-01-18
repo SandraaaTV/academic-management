@@ -932,10 +932,11 @@ function update_sub(){
 }
 
 function showDropdowns(){
-    var emp_cat=document.getElementById("Employee");
+    var emp_cat=document.getElementById("Employee").value;
+    var emparray=emp_cat.split('_');
     var additionalDropdowns=document.getElementById("additionalDropdowns");
 
-        if(emp_cat.value === '4'){// change 'desired value ' to the actual value u r checking
+        if(emparray[1] === '4'){// change 'desired value ' to the actual value u r checking
             additionalDropdowns.style.display = "block";
         }
         else{

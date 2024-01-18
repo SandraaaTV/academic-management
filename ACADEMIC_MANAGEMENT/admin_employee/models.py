@@ -7,21 +7,21 @@ class Employee_designation(models.Model):
     Emp_id=models.ForeignKey('Employee_registration',on_delete=models.CASCADE)
     Designation_id=models.ForeignKey(Designation,on_delete=models.CASCADE)
     From_date=models.DateField()
-    To_date=models.DateField()
+    To_date=models.DateField(blank=True,null=True)
     
 class Employee_salary(models.Model):
     
     Emp_id=models.ForeignKey('Employee_registration',on_delete=models.CASCADE)
-    Designation_id=models.DecimalField(max_digits=10, decimal_places=2)
+    Salary=models.DecimalField(max_digits=10, decimal_places=2)
     From_date=models.DateField()
-    To_date=models.DateField()
+    To_date=models.DateField(blank=True,null=True)
     
 class Employee_department(models.Model):
     
     Emp_id=models.ForeignKey('Employee_registration',on_delete=models.CASCADE)
-    Designation_id=models.ForeignKey(Department,on_delete=models.CASCADE)
+    Department_id=models.ForeignKey(Department,on_delete=models.CASCADE)
     From_date=models.DateField()
-    To_date=models.DateField()
+    To_date=models.DateField(blank=True,null=True)
     
     
     
@@ -41,13 +41,13 @@ class Employee_registration(models.Model):
     Dep_id=models.ForeignKey(Department,on_delete=models.CASCADE)
     Join_date=models.DateField()
     Salary = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    Status = models.BooleanField(default=True)
     # Salary_date=models.DateField()
    
    
-   
     # Salary_id=models.ForeignKey("Salary",on_delete=models.CASCADE)
-    # Photo=models.ImageField(upload_to='employee_photos/',blank=True,null=True)
-    # Barcode=models.ImageField(upload_to='barcode/',blank=True,null=True)
+    Photo=models.ImageField(upload_to='employee_photos/',blank=True,null=True)
+    Barcode=models.ImageField(upload_to='barcode/',blank=True,null=True)
 
 class CSD(models.Model):
     

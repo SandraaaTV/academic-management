@@ -9,30 +9,55 @@
 <!-- END BREADCRUMB -->  
 <div class="content-frame-top">                        
     <div class="page-title">                    
-        <h2><span class="fa fa-arrow-circle-o-left"></span>Employee Registration</h2>
+        <h2><span class="fa fa-arrow-circle-o-left"></span>Employee Registration </h2>
+        
     </div>                                      
 </div>
 
 
-<div class="card-body">
-    <table id="example1" class="table table-bordered table-striped">
+{% comment %} / {% endcomment %}
+
+<div class="col-md-12">
+  <div class="panel panel-default">
+      <div class="panel-heading ui-draggable-handle">                                
+          <h1 class="panel-title"><b>Employee Details</b></h1>
+          <ul class="panel-controls">
+            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+        </ul> 
+                                       
+      </div><div></br></div>
+
+
+
+
+
+
+<div class="panel-body">
+    <table id="example1" class="table datatable dataTable no-footer">
       <thead>
 
       <tr>
         <th>Serial No</th>
-        <th>Employee Category</th>
+        {% comment %} <th>Employee Category</th> {% endcomment %}
         <th>Name</th>
-        <th>Address</th>
+        {% comment %}<th>Address</th>
         <th>DOB</th>
         <th>Email</th>
         <th>Phone</th>
-        <th>Qualification</th>
-        <th>Designation</th>
-        <th>Department</th>
-        <th>Employee ID</th>
-        <th>Date Of Join</th>
-        <th>Salary</th>
-        <th>Salary Date</th>
+         <th>Qualification</th>
+        <th>Designation</th>{% endcomment %}
+        <th>Department</th> 
+{% comment %} 
+        <th>Date Of Join</th> 
+        <th>Salary</th>{% endcomment %}
+        <th>Photo</th>
+        <th>QR Code</th>
+        <th>Status</th>
+        <th>Action</th>
+       
+
 
       
         
@@ -43,37 +68,53 @@
 
       <tr>
         <td>{{ forloop.counter }}</td>
-        <td><img class="profile-user-img img-fluid img-circle" src= "{{i.emp_file_input.url}}"  alt="User profile picture"></td>
-        <td>{{i.emp_name}}</td>
-        <td>{{i.emp_mobile}}</td>
-        <td>{{i.desig.dname}}</td>
+        {% comment %} <td>{{i.Employee_cat_id.Employee_Name}}</td> {% endcomment %}
+        <td>{{i.Emp_name}}</td>
+         {% comment %}<td>{{i.Address}}</td>
+        <td>{{i.Dob}}</td>
+        <td>{{i.Email}}</td>
+        <td>{{i.Mob}}</td>
+        <td>{{i.Qual_id.Qualification_Name}}</td>
+        <td>{{i.Des_id.Designation_Name}}</td>{% endcomment %}
+        <td>{{i.Dep_id.Department_Name}}</td> 
+        {% comment %} <td>{{i.Join_date}}</td>
+        <td>{{i.Salary}}</td> {% endcomment %}
         
-         <td class="project-state">
-              <span class="badge badge-success">Activate</span>
-          </td>
-          <td class="project-actions text-right">
-          <a class="btn btn-tool" href="#" data-toggle="modal" data-target="#modal-xl">
-                  <i class="fas fa-eye">
-                  </i>
-                  
-              </a>
+        <td>
+          {% if i.Photo %}
+          <img class="profile-user-img img-fluid img-circle" src="{{ i.Photo.url }}" alt="User profile picture" height="100" width="100">
+          {% else %}
+              <!-- Add a default image or some alternative content when i.Photo is not available -->
               
-              <a class="btn btn-tool" href="designation edit.html" target="_blank">
-                  <i class="fas fa-pencil-alt">
-                  </i>
-                  
-              </a>
-              <a class="btn btn-tool" id="deleteButton" href="#"><script src="alert.js"></script>
-                  <i class="fas fa-trash">
-                  </i>
-                  
-              </a>
-          </td>
+          {% endif %}
+      </td>
+      <td>
+        {% if i.Barcode %}
+        <img class="profile-user-img img-fluid img-circle" src="{{ i.Barcode.url }}" alt="User profile picture" height="100" width="100">
+        {% else %}
+            <!-- Add a default image or some alternative content when i.Photo is not available -->
+            
+        {% endif %}
+    </td>
+    <td>{% if i.Status %}<span class="label label-success">Active</span>{% else %}<span class="label label-danger">Deactive</span>{% endif %}</td>
+       
+        
+        <td>
+          <button class="btn btn-primary btn-rounded"  onclick="edit_cls({{master_class.id}});"><span id="spinner{{master_class.id}}" class="fa fa-pencil"></span></button>
+             
+              <button class="btn btn-primary btn-rounded" onClick="cls_delete_row({{master_class.id}});"><span class="fa fa-trash-o"></span></button>
+              <input type="hidden" class="btn btn-default" id="delete_url_id" value="{{request.scheme}}://{{request.get_host}}/class_delete">
+
+      </td>
+                       
       </tr>
       
       {% endfor %}  
     </table>
+
+    
   </div>
 
-
+</div>
+</div>
 {% endblock content %}

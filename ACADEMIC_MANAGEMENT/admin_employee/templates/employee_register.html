@@ -12,7 +12,8 @@
 </div>
 
 
-<form method="post">
+<form method="post"  enctype="multipart/form-data" action="{% url 'employee_register' %}">
+  {% csrf_token %}
   
     <div class="col-md-6">
         <div class="panel panel-default">
@@ -28,10 +29,10 @@
 
                       <div class="form-group">
                         <label for="Employee">Employee Category</label>
-                        <select id="Employee" class="form-control" name="Status" onchange="showDropdowns()"> 
+                        <select id="Employee" class="form-control" name="category" onchange="showDropdowns()"> 
                           <option></option>
                           {% for i in employee_data %}
-                          <option value={{i.Employee_Area}}>{{i.Employee_Name}}</option>
+                          <option value="{{i.id}}_{{i.Employee_Area}}">{{i.Employee_Name}}</option>
                           {% endfor %}
                         </select>
                       </div>
@@ -65,7 +66,7 @@
 
                       <div class="form-group">
                         <label for="Qualification">Qualification</label>
-                        <select id="Qualification" class="form-control" name="Status">
+                        <select id="Qualification" class="form-control" name="qualification">
                           <option></option>
                           {% for i in qualification_data %}
                           <option value={{i.id}}>{{i.Qualification_Name}}</option>
@@ -75,7 +76,7 @@
     
                       <div class="form-group">
                         <label for="Designation">Designation</label>
-                        <select id="Designation" class="form-control" name="Status">
+                        <select id="Designation" class="form-control" name="designation">
                           <option></option>
                           {% for i in designation_data %}
                           <option value={{i.id}}>{{i.Designation_Name}}</option>
@@ -84,7 +85,7 @@
                       </div>
                       <div class="form-group">
                         <label for="Department">Department</label>
-                        <select id="Department" class="form-control" name="Status">
+                        <select id="Department" class="form-control" name="department">
                           <option></option>
                           {% for i in department_data %}
                           <option value={{i.id}}>{{i.Department_Name}}</option>
@@ -93,7 +94,7 @@
                       </div>
     
                       
-                      <div class="form-group">
+                      {% comment %} <div class="form-group">
                         <label for="Class">Class</label>
                         <select id="Class" class="form-control" name="Status">
                           <option></option>
@@ -102,7 +103,7 @@
                           {% endfor %}
                         </select>
                       </div>
-                    
+                     {% endcomment %}
                       
                       <div class="form-group">
                         <label for="exampleInputEmail1">Employee id</label>
@@ -145,11 +146,11 @@
 
             <div class="panel-footer">
                 <input type="reset" class="btn btn-default" value="Clear">                                 
-                <button id="submitButton" class="btn btn-primary pull-right">Submit</button>
+                <button id="submitButton" class="btn btn-primary pull-right" type="submit">Submit</button>
             </div>
         </div>
     </div>
-</form>
+
 
 <div class="col-md-6" id="additionalDropdowns" style="display: none">
     <div class="panel panel-default">
@@ -198,7 +199,7 @@
 </div>
 
 <div class="col-md-12">
-  <button id="submitButton" class="btn btn-primary btn-block"  onclick="addToTeacherTable()">ADD</button>
+  <button  class="btn btn-primary btn-block" type="button" onclick="addToTeacherTable()">ADD</button>
 </div>
 
 <div class="panel-body">
@@ -221,7 +222,7 @@
   </table>
 </div>
 </div>
-
+</form>
 <script>
   var rowCount = 0; // Initialize a counter for row numbers
   var addedRows = {}; // Keep track of added rows to prevent duplicates
@@ -252,9 +253,9 @@
   
       var newRow = '<tr>';
       newRow += '<td>' + rowCount + '</td>'; // Display the row number
-      newRow += '<td>' + $('#Class_id option:selected').text() + '</td>';
-      newRow += '<td>' + $('#Division option:selected').text() + '</td>';
-      newRow += '<td>' + $('#Subject option:selected').text() + '</td>';
+      newRow += '<td>' + $('#Class_id option:selected').text() + ' <input type="hidden" value="'+classId+'" name="classId"> </td>';
+      newRow += '<td>' + $('#Division option:selected').text() + '<input type="hidden" value="'+divisionId+'" name="divisionId"></td>';
+      newRow += '<td>' + $('#Subject option:selected').text() + '<input type="hidden" value="'+subjectId+'" name="subjectId"></td>';
       newRow += '<td><button class="btn btn-danger btn-rounded" onclick="deleteRow(this)">Delete</button></td>';
       newRow += '</tr>';
   
